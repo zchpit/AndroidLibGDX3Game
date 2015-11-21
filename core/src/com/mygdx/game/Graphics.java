@@ -19,12 +19,10 @@ public class Graphics {
 
     public void draw(Shape o)
     {
-        /* najpierw stworzymy klase obiektu, a potem to umiescimy
         batch.begin(); // poczatek rysowania
         o.getSprite().setPosition(o.getBody().getPosition().x, o.getBody().getPosition().y); // ustawiamy pozycje do rysowania
         o.getSprite().draw(batch); // rysuj
         batch.end(); // koniec rysowania
-        */
     }
 
     public void update()

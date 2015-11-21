@@ -1,5 +1,7 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
+
 import java.util.Random;
 import java.util.Vector;
 
@@ -13,12 +15,14 @@ public class ObjectManager {
     float t_WhenObjectIsCreated = 1.0f; // czas kiedy obiekt ma byc tworzony
     Random rand; // klasa odpowiedzialna za losowanie
 
+
     public ObjectManager()
     {
         line = new Vector<Line>();
         square = new Vector<Square>();
         rand = new Random();
         createObjects(); // tworzymy obiekty na ekranie
+
     }
     private void createObjects()
     {
@@ -53,9 +57,50 @@ public class ObjectManager {
             line.add(new Line(x,y,path, Shape.Type.Static));
         }
     }
+    private boolean isCreateSquare()
+    {
+        t_FromCreatingObject += Gdx.graphics.getDeltaTime();
+        if(t_FromCreatingObject > t_WhenObjectIsCreated) // jesli czas od ostatniego stworzenia jest wiekszy niz czasu po ktorym ma byc tworzony obiekt
+        {
+            t_FromCreatingObject = 0; // restartujemy czas, ktory uplynal
+            return true;
+        }
+        return false;
+    }
+
+    private void createSquare()
+    {
+        if(isCreateSquare())
+        {
+            square.add(new Square(960, 600, "szaryKwadrat.png", Shape.Type.Kinematic));
+            int random = rand.nextInt(4); // losujemy cyfre
+            switch (random) // losujemy kierunek lotu kwadratu
+            {
+                case 0:
+                    square.lastElement().body.setLinearVelocity(3,0);
+                    break;
+                case 1:
+                    square.lastElement().body.setLinearVelocity(-3,0);
+                    break;
+                case 2:
+                    square.lastElement().body.setLinearVelocity(0,3);
+                    break;
+                case 3:
+                    square.lastElement().body.setLinearVelocity(0,-3);
+                    break;
+            }
+
+
+        }
+    }
+
     public void update()
     {
-        //
+        createSquare(); // tworzymy kwadrat
+        for(int i = 0; i != square.size(); i++)
+        {
+            square.get(i).changeColor(); // zmieniamy kolor kwadratu
+        }
     }
 
     public Vector<Line> getLine()

@@ -7,16 +7,20 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 public class MyGdxGame extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
-	
-	@Override
-	public void create () {
+	public static Graphics GRAPHICS; // nasza grafika
+	Game game; // nasza gra
 
+	@Override
+	public void create ()
+	{
+		GRAPHICS = new Graphics();
+		game = new Game();
 	}
 
 	@Override
-	public void render () {
-
+	public void render ()
+	{
+		GRAPHICS.update(); // aktualizujemy grafike
+		game.update(); // aktualizujemy gre
 	}
 }
